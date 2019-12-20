@@ -29,7 +29,8 @@ exports.post = async (req, res, next) => {
         await repository.create({
             name: req.body.name,
             email: req.body.email,
-            password: md5(req.body.password + global.SALT_KEY)
+            password: md5(req.body.password + global.SALT_KEY),
+            roles: ['user']
         });
         res.status(201).send({ message: 'post success' });
     } catch (e) {
@@ -49,12 +50,44 @@ exports.authenticate = async (req, res, next) => {
         }
 
         const token = await authService.generateToken({
+            id: customer.id,
             email: customer.email,
-            name: customer.name
+            name: customer.name,
+            roles: customer.roles
         });
 
         res.status(200).send({
             token: token,
+            data: {
+                email: customer.email,
+                name: customer.name
+            }
+        });
+    } catch (e) {
+        res.status(500).send({ message: 'post error', data: e });
+    };
+};
+
+exports.refreshToken = async (req, res, next) => {
+    try {
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const authData = await authService.decodeToken(token);
+
+        const customer = await repository.getById(authData.id);
+
+        if (!customer) {
+            res.status(404).send({ message: 'customer not found' });
+        }
+
+        const tokenData = await authService.generateToken({
+            id: customer.id,
+            email: customer.email,
+            name: customer.name,
+            roles: customer.roles
+        });
+
+        res.status(200).send({
+            token: tokenData,
             data: {
                 email: customer.email,
                 name: customer.name
