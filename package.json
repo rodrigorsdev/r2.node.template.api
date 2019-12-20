@@ -1,0 +1,35 @@
+{
+  "name": "r2.node.template.api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./bin/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigorsdev/r2.node.template.api.git"
+  },
+  "author": "Rodrigo Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rodrigorsdev/r2.node.template.api/issues"
+  },
+  "homepage": "https://github.com/rodrigorsdev/r2.node.template.api#readme",
+  "dependencies": {
+    "bip39": "^3.0.2",
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "ethereumjs-util": "^6.2.0",
+    "express": "^4.17.1",
+    "guid": "0.0.12",
+    "hdkey": "^1.1.1",
+    "http": "0.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.2.1",
+    "mongoose": "^5.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
